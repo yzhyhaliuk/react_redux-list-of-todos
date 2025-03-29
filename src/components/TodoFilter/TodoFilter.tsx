@@ -1,6 +1,7 @@
 import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/store';
 import { filterSlice } from '../../features/filter';
+import { Status } from '../../types/enums';
 
 export const TodoFilter: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -9,10 +10,14 @@ export const TodoFilter: React.FC = () => {
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const value = event.target.value;
 
-    if (value === 'all' || value === 'active' || value === 'completed') {
+    if (
+      value === Status.All ||
+      value === Status.Active ||
+      value === Status.Completed
+    ) {
       dispatch(filterSlice.actions.filterByStatus(value));
     } else {
-      dispatch(filterSlice.actions.filterByStatus('all'));
+      dispatch(filterSlice.actions.filterByStatus(Status.All));
     }
   };
 
@@ -28,9 +33,9 @@ export const TodoFilter: React.FC = () => {
             onChange={handleChange}
             value={filter.status}
           >
-            <option value="all">All</option>
-            <option value="active">Active</option>
-            <option value="completed">Completed</option>
+            <option value={Status.All}>All</option>
+            <option value={Status.Active}>Active</option>
+            <option value={Status.Completed}>Completed</option>
           </select>
         </span>
       </p>
